@@ -95,6 +95,8 @@
     cursor:pointer;
     overflow:hidden;
     transition:transform .06s;
+    display:flex;flex-direction:column;
+    padding:5px 3px;
   }
   .cell:active{transform:scale(.96);}
   .cell.outside{
@@ -103,9 +105,9 @@
     cursor:default;
   }
   .cell .num{
-    position:absolute;top:6px;right:8px;
-    font-size:13px;font-weight:600;color:var(--text);
-    min-width:20px;height:20px;line-height:20px;text-align:center;
+    align-self:flex-end;margin:0 4px 0 0;
+    font-size:12.5px;font-weight:600;color:var(--text);
+    min-width:18px;height:18px;line-height:18px;text-align:center;
   }
   .cell.today .num{
     background:var(--purple);color:#fff;border-radius:50%;
@@ -115,13 +117,13 @@
   .cell.loss{background:var(--red-bg);border-color:var(--red-border);}
   .cell.be{background:var(--blue-bg);border-color:var(--blue-border);}
   .cell-data{
-    position:absolute;top:30px;left:3px;right:3px;
-    text-align:center;
+    text-align:center;margin-top:1px;
   }
   .cell-amount{
     font-size:10.5px;font-weight:800;letter-spacing:-.3px;
     color:var(--text);white-space:nowrap;line-height:1.15;
   }
+  .cell-amount.long{font-size:9px;letter-spacing:-.4px;}
   .cell-rate{
     font-size:10px;font-weight:600;color:var(--text-sub);margin-top:2px;
   }
@@ -330,6 +332,7 @@
           const am=document.createElement('div');
           am.className='cell-amount';
           am.textContent=fmtMoney(e.amount);
+          if(am.textContent.length>=8)am.classList.add('long');
           box.appendChild(am);
           if(e.rate!==null&&e.rate!==undefined&&e.rate!==''&&e.amount!==0){
             const r=document.createElement('div');
@@ -348,9 +351,8 @@
     }
 
     const pnl=document.getElementById('pnlPill');
-    pnl.textContent=(total>0?'+':'')+fmtMoney(total).replace('-','-');
+    pnl.textContent=total===0?state.currency+'0':fmtMoney(total);
     pnl.className='pill '+(total>0?'pnl-pos':total<0?'pnl-neg':'pnl-zero');
-    if(total===0)pnl.textContent=state.currency+'0';
     document.getElementById('daysPill').textContent=count+(count>1?' jours':' jour');
   }
 
