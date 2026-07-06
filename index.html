@@ -313,7 +313,7 @@
     const a=Math.abs(v);
     let s;
     if(a>=1e6){s=trim((a/1e6).toPrecision(3))+'M';}
-    else if(a>=1e4){s=trim((a/1e3).toPrecision(3))+'k';}
+    else if(a>=1e3){s=trim((a/1e3).toPrecision(3))+'k';}
     else{s=trim(a.toFixed(2));}
     return sign+state.currency+s;
   }
